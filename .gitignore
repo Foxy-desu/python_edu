@@ -1,0 +1,7 @@
+# .gitignore file
+.venv/
+.idea/
+# Other common entries
+.env
+__pycache__/
+*.pyc
