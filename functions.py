@@ -1,11 +1,17 @@
 import random
 
 
-def check_tweet_limit(tweet_str, tweet_limit=280):
-    if (diff := tweet_limit - len(tweet_str)) >= 0:
-        return 'A fitting tweet'
+def check_tweet_limit_excess(tweet_str, tweet_limit=280):
+    if tweet_limit - len(tweet_str) >= 0:
+        return True
     else:
-        return f'Too many ({abs(diff)}) letters. '
+        return False
+
+def print_tweet_limit_message(is_over_limit):
+    if is_over_limit:
+        return f'Too many characters. '
+    else:
+        return 'A fitting tweet'
 
 ##############################################################################
 ##############################################################################
