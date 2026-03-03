@@ -2,10 +2,10 @@ import random
 
 
 def check_tweet_limit_excess(tweet_str, tweet_limit=280):
-    if tweet_limit - len(tweet_str) > 0:
-        return True
-    else:
+    if tweet_limit - len(tweet_str) >= 0:
         return False
+    else:
+        return True
 
 def print_tweet_limit_message(is_over_limit):
     if is_over_limit:
