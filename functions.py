@@ -2,7 +2,7 @@ import random
 
 
 def check_tweet_limit_excess(tweet_str, tweet_limit=280):
-    if tweet_limit - len(tweet_str) >= 0:
+    if tweet_limit - len(tweet_str) > 0:
         return True
     else:
         return False
