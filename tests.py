@@ -63,7 +63,3 @@ class TestTweetString:
     def test_tweet_string_is_missing(self):
         with pytest.raises(TypeError, match="Tweet value is required"):
             check_tweet_limit_excess()
-# TODO
-
-# твит_стринг - пустой
-# твит_стринг - не строка
