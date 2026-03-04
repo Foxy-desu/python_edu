@@ -12,19 +12,19 @@ from functions import check_tweet_limit_excess
     ('', 1, False),
     ('a', 1, False),
     ('ab', 1, True)
-], ids=lambda s, l, r: f'len={len(s)}, limit={l}' )
+])
 def test_tweet_limit_logic(tweet_str, tweet_limit, expected):
     """Check the upper non-default limit and the lower limit """
-    assert check_tweet_limit_excess(tweet_str, tweet_limit) is expected
+    assert check_tweet_limit_excess(tweet_str, tweet_limit) is expected, f'Failed: tweet_str={tweet_str}, tweet_limit={tweet_limit}'
 
 @pytest.mark.parametrize("tweet_str, expected", [
     ('a' * 279, False),
     ('a' * 280, False),
     ('a' * 281, True)
-], ids = lambda s, r: f'tweet_str={len(s)} limit=280')
+])
 def test_tweet_default_limit(tweet_str, expected):
     """Check the default limit is set and equals 280"""
-    assert check_tweet_limit_excess(tweet_str) is expected
+    assert check_tweet_limit_excess(tweet_str) is expected, f'Failed: tweet_str={tweet_str}'
 # TODO
 
 # Лимит = 0,1
