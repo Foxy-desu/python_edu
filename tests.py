@@ -38,20 +38,31 @@ class TestTweetLimit:
             check_tweet_limit_excess("some random tweet", -5)
 
     @pytest.mark.parametrize("tweet_limit", [
-        True,
-        "10",
-        None,
-        [280],
-        {280},
-        (280),
-        210.5,
+        True, "10", None, [280], {280}, (280,), 210.5,
     ])
     @pytest.mark.xfail(reason="Validation of types is not implemented yet")
     def test_tweet_limit_type_check(self, tweet_limit):
         """Checks if the function accepts different types for tweet limit"""
-        with pytest.raises(TypeError, match="Tweet value type can only be integer"):
+        with pytest.raises(TypeError, match="Tweet limit value type can only be integer"):
             check_tweet_limit_excess("some tweet string", tweet_limit)
 
+
+class TestTweetString:
+    """Checks for tweet_string parameter and related functional logics"""
+
+    @pytest.mark.parametrize("tweet_str", [
+        25000, 25.055, None, ["my tweet"], {"my tweet"}, ("my tweet",),
+    ])
+    @pytest.mark.xfail(reason="Validation of types is not implemented yet")
+    def test_tweet_string_type_check(self, tweet_str):
+        """Check type validation for tweet_str parameter"""
+        with pytest.raises(TypeError, match="Tweet value type can only be string"):
+            check_tweet_limit_excess(tweet_str)
+
+    @pytest.mark.xfail(reason="Validation of missing arguments is not implemented yet")
+    def test_tweet_string_is_missing(self):
+        with pytest.raises(TypeError, match="Tweet value is required"):
+            check_tweet_limit_excess()
 # TODO
 
 # твит_стринг - пустой
