@@ -50,7 +50,7 @@ class TestTweetLimit:
     def test_tweet_limit_type_check(self, tweet_limit):
         """Checks if the function accepts different types for tweet limit"""
         with pytest.raises(TypeError, match="Tweet value type can only be integer"):
-            check_tweet_limit_excess("some tweet string")
+            check_tweet_limit_excess("some tweet string", tweet_limit)
 
 # TODO
 
