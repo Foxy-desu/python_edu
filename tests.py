@@ -26,6 +26,17 @@ def test_check_tweet_upper_limit_boundaries_with_default(tweet_len, expected):
     assert result is expected, f'Failed with tweet_len = {tweet_len}'
 
 
+@pytest.mark.parametrize("tweet_string, tweet_limit, expected", [
+    ('', 0, False),
+    ('', 1, False),
+    ('a', 0, True),
+    ('a', 1, False),
+    ('abc', 0, True),
+    ('abc', 1, True),
+])
+def test_check_tweet_lower_limit(tweet_string, tweet_limit, expected):
+    result = check_tweet_limit_excess(tweet_string, lower_limit)
+    assert result is expected, f'Failed with tweet_string = {tweet_string} and lower_limit = {lower_limit}'
 # TODO
 
 # Лимит = 0,1
