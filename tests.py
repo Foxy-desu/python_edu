@@ -1,42 +1,30 @@
 import pytest
 from functions import check_tweet_limit_excess
 
-@pytest.mark.parametrize("length_offset, expected",[
-    (-1, False),
-    (0, False),
-    (1, True),
-])
-def test_check_tweet_upper_limit_boundaries(length_offset, expected):
-    """Проверка граничных значений c передаваемым верхим лимитом 30"""
-    limit = 30
-    tweet = 'a' * (limit + length_offset)
-    result = check_tweet_limit_excess(tweet, limit)
-    assert result is expected, f"Failed with tweet_length = {len(tweet)} and limit = {limit}"
-
-
-@pytest.mark.parametrize("tweet_len, expected", [
-    (279, False),
-    (280, False),
-    (281, True)
-])
-def test_check_tweet_upper_limit_boundaries_with_default(tweet_len, expected):
-    """Проверка граничных значений с дефолтным верхним лимитом 280"""
-    tweet = 'a' * tweet_len
-    result = check_tweet_limit_excess(tweet)
-    assert result is expected, f'Failed with tweet_len = {tweet_len}'
-
-
-@pytest.mark.parametrize("tweet_string, tweet_limit, expected", [
+@pytest.mark.parametrize("tweet_str, tweet_limit, expected", [
+    #for custom limit of 33
+    ('a' * 32, 33, False),
+    ('a' * 33, 33, False),
+    ('a' * 34, 33, True),
+    #for lower limit of 0 and 1
     ('', 0, False),
-    ('', 1, False),
     ('a', 0, True),
+    ('', 1, False),
     ('a', 1, False),
-    ('abc', 0, True),
-    ('abc', 1, True),
-])
-def test_check_tweet_lower_limit(tweet_string, tweet_limit, expected):
-    result = check_tweet_limit_excess(tweet_string, lower_limit)
-    assert result is expected, f'Failed with tweet_string = {tweet_string} and lower_limit = {lower_limit}'
+    ('ab', 1, True)
+], ids=lambda s, l, r: f'len={len(s)}, limit={l}' )
+def test_tweet_limit_logic(tweet_str, tweet_limit, expected):
+    """Check the upper non-default limit and the lower limit """
+    assert check_tweet_limit_excess(tweet_str, tweet_limit) is expected
+
+@pytest.mark.parametrize("tweet_str, expected", [
+    ('a' * 279, False),
+    ('a' * 280, False),
+    ('a' * 281, True)
+], ids = lambda s, r: f'tweet_str={len(s)} limit=280')
+def test_tweet_default_limit(tweet_str, expected):
+    """Check the default limit is set and equals 280"""
+    assert check_tweet_limit_excess(tweet_str) is expected
 # TODO
 
 # Лимит = 0,1
