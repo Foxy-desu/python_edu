@@ -110,4 +110,24 @@ class TestLetters:
         assert check_vowel(letter) is expected
 
 
+    @pytest.mark.negative
+    def test_non_latin_letters_fails(self):
+        """Checks if the function fails with non-latin letters properly"""
+        pass
+
+    @pytest.mark.negative
+    def test_special_symbols_fails(self):
+        """Checks if function fails with special symbols properly"""
+        pass
+
+    @pytest.mark.negative
+    def test_non_string_values_fails(self):
+        """Checks if function fails with non-string values properly"""
+        pass
+
+    @pytest.mark.negative
+    def test_input_value_length_fails(self):
+        """Checks if function fails properly with strings of the wrong length """
+        pass
+
 
