@@ -111,23 +111,34 @@ class TestLetters:
 
 
     @pytest.mark.negative
-    def test_non_latin_letters_fails(self):
-        """Checks if the function fails with non-latin letters properly"""
-        pass
+    @pytest.mark.parametrize("char", [
+        'ж', 'а', 'с', 'ñ', 'ö', 'λ', '阿', '!','7',' ', '🦊'
+    ])
+    @pytest.mark.xfail(reason="Validation of the value is not yet implemented")
+    def test_not_latin_letters_fails(self, char):
+        """Checks if the function fails with a string containing elements not related to the latin alphabet"""
+        with pytest.raises(ValueError, match="Only a latin letter can be passed."):
+            result = check_vowel(char)
+            print(result)
+
 
     @pytest.mark.negative
-    def test_special_symbols_fails(self):
-        """Checks if function fails with special symbols properly"""
-        pass
-
-    @pytest.mark.negative
-    def test_non_string_values_fails(self):
+    @pytest.mark.parametrize("value", [
+        True, 1, 5.5, None, {}, [], ("a","b"),
+    ])
+    def test_wrong_type_values_fails(self, value):
         """Checks if function fails with non-string values properly"""
-        pass
+        with pytest.raises(TypeError, match='Wrong value type. String containing a latin letter should be passed'):
+            result = check_vowel(value)
+            print(result)
 
     @pytest.mark.negative
-    def test_input_value_length_fails(self):
+    @pytest.mark.parametrize("value", [
+        "", "ch"
+    ])
+    def test_input_value_length_fails(self, value):
         """Checks if function fails properly with strings of the wrong length """
-        pass
-
+        with pytest.raises(ValueError, match="Value must be exactly one character"):
+            result = check_vowel(value)
+            print(result)
 
