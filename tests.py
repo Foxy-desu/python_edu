@@ -1,6 +1,7 @@
+import string
 import pytest
-from functions import check_tweet_limit_excess, print_tweet_limit_message
-
+from functions import check_tweet_limit_excess, print_tweet_limit_message, check_vowel
+from helpers import get_alphabet_data
 
 class TestTweetLimit:
     """Checks for tweet_limit parameter and related functional logics"""
@@ -97,3 +98,16 @@ class TestTerminalOutput:
             result = print_tweet_limit_message(is_over_limit)
             captured = capsys.readouterr()
             print(f"\nReturned: '{result}', printed: '{captured.out}' with passed parameter '{is_over_limit}'")
+
+
+class TestLetters:
+
+    @pytest.mark.positive
+    @pytest.mark.parametrize("letter, expected", get_alphabet_data())
+    @pytest.mark.xfail(reason="Function returns string instead of bool")
+    def test_check_all_latin_letters(self, letter, expected):
+        """Checks if the function returns True when the letter is a vowel or False when the letter is a consonant """
+        assert check_vowel(letter) is expected
+
+
+
