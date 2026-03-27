@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 #create basic class
 # class Pockemon:
 #     # an attribute for this class
@@ -87,112 +89,148 @@
 
 #try operator overloading
 
-class PalMon:
-    def __init__(self, name, level):
-        self.name = name
-        self.level = level
-        self.hp = 95
-    def __add__(self, other):
-        if isinstance(other, PalMon):
-            first_half = self.name[:(len(self.name)//2)+1]
-            second_half = other.name[:(len(other.name)//2)+1]
-            new_name = f"{first_half}-{second_half}"
-            new_level = (self.level + other.level) / 2
-            return PalMon(new_name,new_level)
-        else:
-            NotImplemented
+# class PalMon:
+#     def __init__(self, name, level):
+#         self.name = name
+#         self.level = level
+#         self.hp = 95
+#     def __add__(self, other):
+#         if isinstance(other, PalMon):
+#             first_half = self.name[:(len(self.name)//2)+1]
+#             second_half = other.name[:(len(other.name)//2)+1]
+#             new_name = f"{first_half}-{second_half}"
+#             new_level = (self.level + other.level) / 2
+#             return PalMon(new_name,new_level)
+#         else:
+#             NotImplemented
+#
+#     def __eq__(self, other):
+#         if isinstance(other, PalMon):
+#             if self.level == other.level:
+#                 return True
+#             else:
+#                 return False
+#         else:
+#             NotImplemented
+#
+#     def __ne__(self, other):
+#         if isinstance(other, PalMon):
+#             if self.level != other.level:
+#                 return True
+#             else:
+#                 return False
+#         else:
+#             NotImplemented
+#
+#     def __lt__(self, other):
+#         if isinstance(other, PalMon):
+#             if self.level < other.level:
+#                 return True
+#             else:
+#                 return False
+#         else:
+#             NotImplemented
+#
+#     def __gt__(self, other):
+#         if isinstance(other, PalMon):
+#             if self.level > other.level:
+#                 return True
+#             else:
+#                 return False
+#         else:
+#             NotImplemented
+#
+#     def __le__(self, other):
+#         if isinstance(other, PalMon):
+#             if self.level <= other.level:
+#                 return True
+#             else:
+#                 return False
+#         else:
+#             NotImplemented
+#
+#     def __ge__(self, other):
+#         if isinstance(other, PalMon):
+#             if self.level >= other.level:
+#                 return True
+#             else:
+#                 return False
+#         else:
+#             NotImplemented
+#
+#     def _up_hp(self, new_hp):
+#         curr_hp = self._hp
+#         for i in range(new_hp + 1):
+#             if curr_hp < 100:
+#                 curr_hp += 1
+#             else:
+#                 break
+#         return curr_hp
+#
+#     @property
+#     def hp(self):
+#         return self._hp
+#
+#     @hp.setter
+#     def hp(self, new_hp):
+#         if type(new_hp) is int:
+#             self._hp = new_hp
+#             print(f"{self.name}'s HP is {self.hp} now.")
+#         else:
+#             raise TypeError(f"Please, use int only. The type passed is {type(new_hp)}")
+#
+#
+#     def __call__(self, *args, **kwargs):
+#         for key, value in kwargs.items():
+#             if key == "food":
+#                 print(f"Omnomnom.... Delicious {value}!")
+#             if key == "medicine":
+#                 try:
+#                     self.hp = self._up_hp(value)
+#                 except TypeError as err:
+#                     print(err)
+#
+#
+#
+#
+#     def __str__(self):
+#         return f"Palmon {self.name} (lvl {self.level})"
+#
+#
+# first = PalMon("Battrice", 5)
+# second = PalMon("Bigos", 8)
+# third = first + second
+# third(food="banana", medicine="3")
+# print("Success!")
 
-    def __eq__(self, other):
-        if isinstance(other, PalMon):
-            if self.level == other.level:
-                return True
-            else:
-                return False
-        else:
-            NotImplemented
+class AbstractClass(ABC):
+    def __init__(self, name,):
+        self.calc_name = name
 
-    def __ne__(self, other):
-        if isinstance(other, PalMon):
-            if self.level != other.level:
-                return True
-            else:
-                return False
-        else:
-            NotImplemented
+    @abstractmethod
+    def calculate(self):
+        raise NotImplementedError("Abstract method cannot be called")
 
-    def __lt__(self, other):
-        if isinstance(other, PalMon):
-            if self.level < other.level:
-                return True
-            else:
-                return False
-        else:
-            NotImplemented
+class Multiplyer(AbstractClass):
+    def __init__(self, name):
+        super().__init__(name)
 
-    def __gt__(self, other):
-        if isinstance(other, PalMon):
-            if self.level > other.level:
-                return True
-            else:
-                return False
-        else:
-            NotImplemented
+    def calculate(self):
+        print(f"{self.calc_name} is instance of Mulriplyer. It Multiplyes.")
 
-    def __le__(self, other):
-        if isinstance(other, PalMon):
-            if self.level <= other.level:
-                return True
-            else:
-                return False
-        else:
-            NotImplemented
+class Devidor(AbstractClass):
+    def __init__(self, name):
+        super().__init__(name)
 
-    def __ge__(self, other):
-        if isinstance(other, PalMon):
-            if self.level >= other.level:
-                return True
-            else:
-                return False
-        else:
-            NotImplemented
-
-    def _up_hp(self, new_hp):
-        curr_hp = self._hp
-        for i in range(new_hp + 1):
-            if curr_hp < 100:
-                curr_hp += 1
-            else:
-                break
-        return curr_hp
-
-    @property
-    def hp(self):
-        return self._hp
-
-    @hp.setter
-    def hp(self, new_hp):
-        if type(new_hp) is int:
-            self._hp = new_hp
-            print(f"{self.name}'s HP is {self.hp} now.")
-        else:
-            raise TypeError(f"Please, use int only. The type passed is {type(new_hp)}")
+    def calculate(self):
+        print(f"{self.calc_name} is instance of Devidor. It Devides.")
 
 
-    def __call__(self, *args, **kwargs):
-        for key, value in kwargs.items():
-            if key == "food":
-                print(f"Omnomnom.... Delicious {value}!")
-            if key == "medicine":
-                self.hp = self._up_hp(value)
+devide = Devidor("Splitter")
+mult = Multiplyer("Procreat")
 
+def call_calculate(obj):
+    obj.calculate()
 
-
-
-    def __str__(self):
-        return f"Palmon {self.name} (lvl {self.level})"
-
-
-first = PalMon("Battrice", 5)
-second = PalMon("Bigos", 8)
-third = first + second
-third(food="banana", medicine=3)
+for elem in (devide, mult):
+    call_calculate(elem)
